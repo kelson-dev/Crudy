@@ -1,0 +1,18 @@
+﻿using System;
+using System.Threading.Tasks;
+
+namespace Crudy.Common
+{
+    public partial struct One<T, TId>
+        where T : IExistingEntity<TId>
+        where TId : IComparable<TId>, IEquatable<TId>
+    {
+        public TId ID { get; set; }
+        private T? _item;
+        public async Task<T> Fetch(IReadableEntityStorage<T, TId> storage) => _item ??= await storage.Read(ID);
+        public static implicit operator TId(One<T, TId> one) => one.ID;
+        public static implicit operator One<T, TId>(TId id) => new() { ID = id };
+    }
+
+
+}

@@ -4,8 +4,7 @@
  • /tests | **all test projects**<br>
  • /tests/{persistence layer} | **infrastructure specific test projects**<br>
  • /common/ | **core interfaces and types required by all implementations** <br>
- • /common-gen/ | **core code generation used by all implementations** <br>
- • /{persistence layer}-gen/ | **infrastructure specific code-gen** <br>
+ • /{persistence layer}/ | **infrastructure specific code** <br>
  • /migration/ | **migration support library** <br>
 
 ## Building and Testing
