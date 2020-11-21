@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+	<Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\common\Crudy.Common.Sql\Crudy.Common.Sql.csproj" />
+    <ProjectReference Include="..\..\common\Crudy.Common\Crudy.Common.csproj" />
+  </ItemGroup>
+
+</Project>

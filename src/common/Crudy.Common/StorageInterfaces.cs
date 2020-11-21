@@ -7,7 +7,7 @@ namespace Crudy.Common
     /// <summary>
     /// To be implemented by source generators as implicitly castable to IReadWriteEntityStorage implementations for each entity type
     /// </summary>
-    public interface IStoreage
+    public interface IStorage
     {
 
     }
@@ -23,14 +23,14 @@ namespace Crudy.Common
     public interface IReadWriteEntityStorage<T, TId> :
         IReadableEntityStorage<T, TId>,
         IWritableEntityStorage<T, TId>
-        where T : IExistingEntity<TId>
+        where T : IEntity<TId>
         where TId : IComparable<TId>, IEquatable<TId>
     {
 
     }
 
     public interface IReadableEntityStorage<T, TId> 
-        where T : IExistingEntity<TId>
+        where T : IEntity<TId>
         where TId : IComparable<TId>, IEquatable<TId>
     {
         Task<SortedList<TId, T>> Read();
@@ -41,7 +41,7 @@ namespace Crudy.Common
     }
 
     public interface IWritableEntityStorage<T, TId>
-        where T : IExistingEntity<TId>
+        where T : IEntity<TId>
         where TId : IComparable<TId>, IEquatable<TId>
     {
         Task<T> Write(INewEntity<T, TId> value);

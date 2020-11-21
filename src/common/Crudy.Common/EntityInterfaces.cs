@@ -10,12 +10,12 @@ namespace Crudy.Common
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TId"></typeparam>
     public interface INewEntity<T, TId> 
-        where T : IExistingEntity<TId>
+        where T : IEntity<TId>
         where TId : IComparable<TId>, IEquatable<TId>
     {
     }
 
-    public interface IExistingEntity<TId>
+    public interface IEntity<TId>
         where TId : IComparable<TId>, IEquatable<TId>
     {
         TId ID { get; }
@@ -24,17 +24,17 @@ namespace Crudy.Common
     public record ExampleItem(
         int ID, 
         string Value) 
-        : IExistingEntity<int>;
+        : IEntity<int>;
 
     public static class NewEntityExtensions
     {
         public static Task<T> WriteTo<T, TId>(this INewEntity<T, TId> entity, IWritableEntityStorage<T, TId> storage)
-            where T : IExistingEntity<TId>
+            where T : IEntity<TId>
             where TId : IComparable<TId>, IEquatable<TId>
             => storage.Write(entity);
 
         public static Task<SortedList<TId, T>> WriteTo<T, TId>(this INewEntity<T, TId>[] entities, IWritableEntityStorage<T, TId> storage)
-            where T : IExistingEntity<TId>
+            where T : IEntity<TId>
             where TId : IComparable<TId>, IEquatable<TId>
             => storage.WriteMany(entities);
     }

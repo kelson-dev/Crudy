@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\common\Crudy.Common.Gen\Crudy.Common.Gen.csproj" />
+    <ProjectReference Include="..\..\src\common\Crudy.Common\Crudy.Common.csproj" />
+  </ItemGroup>
 
 </Project>
