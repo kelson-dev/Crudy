@@ -7,7 +7,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\common\Crudy.Common.Gen\Crudy.Common.Gen.csproj" />
+    <ProjectReference Include="..\..\src\common\Crudy.Common.Sql\Crudy.Common.Sql.csproj" />
     <ProjectReference Include="..\..\src\common\Crudy.Common\Crudy.Common.csproj" />
+    <ProjectReference Include="..\..\src\mssql\Crudy.Mssql.Common\Crudy.Mssql.Common.csproj" />
+    <ProjectReference Include="..\..\src\mssql\Crudy.Mssql.Gen\Crudy.Mssql.Gen.csproj" 
+					  OutputItemType="Analyzer"
+					  ReferenceOutputAssembly="false"/>
   </ItemGroup>
 
 </Project>

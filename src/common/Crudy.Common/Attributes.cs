@@ -1,7 +1,18 @@
 ﻿using System;
+using System.Collections;
 
 namespace Crudy.Common
 {
+    public class ConstraintValidationException : Exception
+    {
+
+    }
+
+    /// <summary>
+    /// Indicates a type represents a repeatable collection of columns to indlude in other entities
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+    public class ColumnsAttribute : Attribute { }
 
     /// <summary>
     /// Indicates that a column that would otherwise be set by the DB should be explicitly provided on creation.
@@ -68,15 +79,34 @@ namespace Crudy.Common
         public FixedWidthAttribute(uint width) => Width = width;
     }
 
+    public interface Constraint<T>
+    {
+        T Value { get; set; }
+    }
+
     /// <summary>
     /// Indicates that a field will fit within the specified max width (inclusive).
     /// Use on strings or arrays of primitives.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Field)]
-    public class MaxWidthAttribute : Attribute
+    public abstract class MaxWidth<T> : Constraint<T>
     {
-        public uint Width { get; }
-        public MaxWidthAttribute(uint width) => Width = width;
+        private T _value;
+        public T Value 
+        {
+            get => _value;
+            set
+            {
+                if (value is string text && text.Length > Max
+                 || value is Array array && array.Length > Max
+                 || value is ICollection collection && collection.Count > Max)
+                    throw new ConstraintValidationException();
+                Value = value;
+            }
+        }
+
+        public abstract uint Max { get; }
+
+        public static implicit operator T(MaxWidth<T> value) => value.Value;
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Field)]

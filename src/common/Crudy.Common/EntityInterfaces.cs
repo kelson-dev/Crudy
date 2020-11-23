@@ -18,13 +18,64 @@ namespace Crudy.Common
     public interface IEntity<TId>
         where TId : IComparable<TId>, IEquatable<TId>
     {
-        TId ID { get; }
+        //TId ID { get; }
     }
 
-    public record ExampleItem(
-        int ID, 
-        string Value) 
-        : IEntity<int>;
+    public interface ColumnSet
+    {
+
+    }
+
+    public readonly struct Increment<T>
+    {
+        public readonly T Value;
+
+        public Increment(T value) => Value = value;
+
+        public static implicit operator T (Increment<T> value) => value.Value;
+        public static implicit operator Increment<T> (T value) => new (value);
+    }
+
+    public readonly struct CreateRandom<T>
+    {
+        public readonly T Value;
+
+        public CreateRandom(T value) => Value = value;
+
+        public static implicit operator T(CreateRandom<T> value) => value.Value;
+        public static implicit operator CreateRandom<T>(T value) => new(value);
+    }
+
+    public readonly struct UpdateRandom<T>
+    {
+        public readonly T Value;
+
+        public UpdateRandom(T value) => Value = value;
+
+        public static implicit operator T(UpdateRandom<T> value) => value.Value;
+        public static implicit operator UpdateRandom<T>(T value) => new(value);
+    }
+
+    public readonly struct CreateTime<T>
+    {
+        public readonly T Value;
+
+        public CreateTime(T value) => Value = value;
+
+        public static implicit operator T(CreateTime<T> value) => value.Value;
+        public static implicit operator CreateTime<T>(T value) => new(value);
+    }
+
+    public readonly struct UpdateTime<T>
+    {
+        public readonly T Value;
+
+        public UpdateTime(T value) => Value = value;
+
+        public static implicit operator T(UpdateTime<T> value) => value.Value;
+        public static implicit operator UpdateTime<T>(T value) => new(value);
+    }
+
 
     public static class NewEntityExtensions
     {
