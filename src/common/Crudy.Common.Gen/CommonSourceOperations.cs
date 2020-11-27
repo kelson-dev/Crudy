@@ -10,9 +10,14 @@ namespace Crudy.Common.Gen
 {
     public class CommonSourceOperations
     {
-        public virtual bool IsColumnSetRecord(RecordDeclarationSyntax type)
+        private static IEnumerable<string> BaseTypeTexts(TypeDeclarationSyntax type)  =>
+            type.BaseList?.Types.Select(t => t.GetText().ToString()) ?? Enumerable.Empty<string>()
+
+        public virtual bool IsColumnSetRecord(TypeDeclarationSyntax type)
         {
-            throw new NotImplementedException();
+            if (!type.Modifiers.Any(ArePartial))
+                return false;
+            return BaseTypeTexts(type).Any(t => t.StartsWith("ColumnSet"));
         }
 
         public virtual bool IsEntityDeclarationRecord(RecordDeclarationSyntax type)
@@ -20,19 +25,14 @@ namespace Crudy.Common.Gen
             if (!type.Modifiers.Any(ArePartial))
                 return false;
 
-            var baseTypeTexts = (type.BaseList?.Types.Select(t => t.GetText().ToString()) ?? Enumerable.Empty<string>()).ToImmutableArray();
             ParameterSyntax? firstParam = type.ParameterList?.Parameters.FirstOrDefault();
             if (firstParam?.Identifier.ToString() != "ID")
                 return false;
             var idTypeString = firstParam.Type?.ToString();
-            var isEntity = baseTypeTexts.Any(t => t.StartsWith($"IEntity<{idTypeString}>"));
+            var isEntity = (type.BaseList?.Types.Select(t => t.GetText().ToString()) ?? Enumerable.Empty<string>())
+                .Any(t => t.StartsWith($"IEntity<{idTypeString}>"));
             return isEntity;
-        }
-
-        public virtual bool IsColumnSetClass(ClassDeclarationSyntax type)
-        {
-            throw new NotImplementedException();
-        }
+        }       
 
         public virtual bool IsEntityDeclarationClass(ClassDeclarationSyntax type)
         {
@@ -64,12 +64,7 @@ namespace Crudy.Common.Gen
                 return false;
             }
         }
-
-        public virtual bool IsColumnSetStruct(StructDeclarationSyntax type)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public virtual StorageAttributeDeclaration ToStorageAttribute(AttributeSyntax attribute)
         {
             throw new NotImplementedException();

@@ -1,28 +1,12 @@
 ﻿using Crudy.Common;
 using System;
+using LongText = Crudy.Common.MaxWidth<string, Crudy.Examples.ProjectTracker.Entities.S2048>;
 
 namespace Crudy.Examples.ProjectTracker.Entities
 {
-    public class Max256<T> : MaxWidth<T> 
-    { 
-        public override uint Max => 256;
-        // Auto gen this?
-        public static implicit operator Max256<T>(T value) => new Max256<T> { Value = value };
-    }
-
-    public class Max128<T> : MaxWidth<T>
-    {
-        public override uint Max => 128;
-        // Auto gen this?
-        public static implicit operator Max128<T>(T value) => new Max128<T> { Value = value };
-    }
-
-    public class LongText : MaxWidth<string>
-    {
-        public override uint Max => 2048;
-        // Auto gen this?
-        public static implicit operator LongText(string value) => new LongText { Value = value };
-    }
+    public class S128 : Size { public override uint Value => 128; }
+    public class S256 : Size { public override uint Value => 256; }
+    public class S2048 : Size { public override uint Value => 2048; }
 
     public partial record Timestamp(
         CreateTime<DateTimeOffset> Created, 
@@ -52,7 +36,7 @@ namespace Crudy.Examples.ProjectTracker.Entities
 
     public partial record Board(
         CreateRandom<Guid> ID,
-        Max256<string> Title,
+        MaxWidth<string, S256> Title,
         One<User, Guid> Owner,
         Timestamp Timestamp)
         : IEntity<Guid>;
@@ -77,7 +61,7 @@ namespace Crudy.Examples.ProjectTracker.Entities
     public partial record Status(
         CreateRandom<Guid> ID,
         One<Board, Guid> Board,
-        Max128<string> Title,
+        MaxWidth<string, S128> Title,
         Timestamp Timestamp)
         : IEntity<Guid>;
 
@@ -87,14 +71,16 @@ namespace Crudy.Examples.ProjectTracker.Entities
         One<Status, Guid> Status,
         One<User, Guid> Author,
         One<User, Guid> Owner,
-        Max128<string> Title,
+        MaxWidth<string, S128> Title,
         uint Ordinal,
         LongText Content,
         LongText? Attachement,
         Timestamp Timestamp)
         : IEntity<Guid>;
 
-    public partial record CardTag((One<Card, Guid> Card, Max128<string> Tag) ID) : IEntity<(One<Card, Guid> Card, string Tag)>;
+    public partial record CardTag(
+        (One<Card, Guid> Card, MaxWidth<string, S128> Tag) ID) 
+        : IEntity<(One<Card, Guid> Card, string Tag)>;
 
     public partial record CardComment(
         Guid ID,
