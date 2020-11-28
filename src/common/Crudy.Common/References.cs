@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Crudy.Common
 {
-    public partial struct One<T, TId>
+    public partial struct One<T, TId> : ColumnDescriptor<TId>
         where T : IEntity<TId>
         where TId : IComparable<TId>, IEquatable<TId>
     {
@@ -14,7 +14,7 @@ namespace Crudy.Common
         public static implicit operator One<T, TId>(TId id) => new() { ID = id };
     }
 
-    public partial struct Optional<T, TId>
+    public partial struct Optional<T, TId> : ColumnDescriptor<TId>
         where T : IEntity<TId>
         where TId : IComparable<TId>, IEquatable<TId>
     {

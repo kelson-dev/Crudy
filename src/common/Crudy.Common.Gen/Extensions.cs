@@ -21,7 +21,7 @@ namespace Crudy.Common.Gen
                 ? new SortedList<TKey, TValue>(collection.Count)
                 : new SortedList<TKey, TValue>();
             foreach (var value in values)
-                list.Add(keySelector(key), value);
+                list.Add(keySelector(value), value);
             return list;
         }
     }

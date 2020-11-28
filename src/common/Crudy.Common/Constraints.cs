@@ -3,12 +3,9 @@ using System.Collections;
 
 namespace Crudy.Common
 {
-    public class ConstraintValidationException : Exception
-    {
+    public class ConstraintValidationException : Exception { }
 
-    }
-
-    public interface Constraint<T>
+    public interface Constraint<T> : ColumnDescriptor<T>
     {
         T Value { get; init; }
     }
@@ -16,6 +13,18 @@ namespace Crudy.Common
     public abstract class Size
     {
         public abstract uint Value { get; }
+    }
+
+    public abstract class Precision
+    {
+        public abstract uint Whole { get; }
+        public abstract uint Fractional { get; }
+    }
+
+    public class Currency : Precision
+    {
+        public override uint Whole => 16;
+        public override uint Fractional => 2;
     }
 
     /// <summary>
@@ -47,34 +56,12 @@ namespace Crudy.Common
         public static implicit operator MaxWidth<T, TSize>(T value) => new() { Value = value };
     }
 
-    /// <summary>
-    /// Indicates that the field is used to store currency values and 
-    /// should use decimal precision values accordingly
-    /// </summary>
-    public readonly struct Currency<T>
+    public readonly struct DecimalPrecision<T, TPrecision>
+        where TPrecision : Precision
     {
         public T Value { get; init; }
-        
-        public static implicit operator T(Currency<T> value) => value.Value;
-        public static implicit operator Currency<T>(T value) => new() { Value = value };
-    }
 
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Field)]
-    public class DecimalPrecisionAttribute : Attribute
-    {
-        public readonly int Total;
-        public readonly int Fractional;
-
-        public DecimalPrecisionAttribute(int total, int fractional)
-        {
-            Total = total;
-            Fractional = fractional;
-        }
-    }
-
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Field)]
-    public class CurrencyAttribute : DecimalPrecisionAttribute
-    {
-        public CurrencyAttribute() : base(16, 2) { }
+        public static implicit operator T(DecimalPrecision<T, TPrecision> value) => value.Value;
+        public static implicit operator DecimalPrecision<T, TPrecision>(T value) => new() { Value = value };
     }
 }

@@ -11,22 +11,20 @@ namespace Crudy.Common
     /// <typeparam name="TId"></typeparam>
     public interface INewEntity<T, TId> 
         where T : IEntity<TId>
-        where TId : IComparable<TId>, IEquatable<TId>
-    {
-    }
+        where TId : IComparable<TId>, IEquatable<TId> { }
 
     public interface IEntity<TId>
-        where TId : IComparable<TId>, IEquatable<TId>
-    {
-        //TId ID { get; }
-    }
+        where TId : IComparable<TId>, IEquatable<TId> { }
 
-    public interface ColumnSet
-    {
+    public interface ColumnSet { }
 
-    }
+    /// <summary>
+    /// Indicates that the implementing type wraps a column type with additional constraints or behavior
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface ColumnDescriptor<T> { }
 
-    public readonly struct Increment<T>
+    public readonly struct Increment<T> : ColumnDescriptor<T>
     {
         public readonly T Value;
 
@@ -36,7 +34,7 @@ namespace Crudy.Common
         public static implicit operator Increment<T> (T value) => new (value);
     }
 
-    public readonly struct CreateRandom<T>
+    public readonly struct CreateRandom<T> : ColumnDescriptor<T>
     {
         public readonly T Value;
 
@@ -46,7 +44,7 @@ namespace Crudy.Common
         public static implicit operator CreateRandom<T>(T value) => new(value);
     }
 
-    public readonly struct UpdateRandom<T>
+    public readonly struct UpdateRandom<T> : ColumnDescriptor<T>
     {
         public readonly T Value;
 
@@ -56,7 +54,7 @@ namespace Crudy.Common
         public static implicit operator UpdateRandom<T>(T value) => new(value);
     }
 
-    public readonly struct CreateTime<T>
+    public readonly struct CreateTime<T> : ColumnDescriptor<T>
     {
         public readonly T Value;
 
@@ -66,7 +64,7 @@ namespace Crudy.Common
         public static implicit operator CreateTime<T>(T value) => new(value);
     }
 
-    public readonly struct UpdateTime<T>
+    public readonly struct UpdateTime<T> : ColumnDescriptor<T>
     {
         public readonly T Value;
 

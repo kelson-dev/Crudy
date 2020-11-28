@@ -1,21 +1,22 @@
 ﻿using Crudy.Common.Gen;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Crudy.Mssql.Gen
 {
-    public record CompilationOrganization(
-        ImmutableArray<TypeDeclarationSyntax> Types,
-        SortedList<string, TypeDeclarationSyntax> ColumnSets,
-        ImmutableArray<RecordDeclarationSyntax> RecordEntities,
-        ImmutableArray<ClassDeclarationSyntax> ClassEntities,
-        ImmutableArray<StructDeclarationSyntax> StructEntities);
+    public class CompilationOrganization
+    {
+        public ImmutableArray<TypeDeclarationSyntax> Types { get; set; }
+        public SortedList<string, TypeDeclarationSyntax> ColumnSets { get; set; }
+        public ImmutableArray<RecordDeclarationSyntax> RecordEntities { get; set; }
+        public ImmutableArray<ClassDeclarationSyntax> ClassEntities { get; set; }
+        public ImmutableArray<StructDeclarationSyntax> StructEntities { get; set; }
+    }
 
     [Generator]
     public class SqlGenerator : ISourceGenerator
@@ -24,6 +25,7 @@ namespace Crudy.Mssql.Gen
 
         public void Execute(GeneratorExecutionContext context)
         {
+            return;
             Debug.WriteLine("Executing code generator");
             if (context.Compilation is Compilation compilation)
             {
@@ -35,24 +37,25 @@ namespace Crudy.Mssql.Gen
                         .WhereIs<SyntaxNode, TypeDeclarationSyntax>())
                     .ToImmutableArray();
 
-                CompilationOrganization definition = new(
-                    Types: nodes,
-                    ColumnSets: nodes
+                var definition = new CompilationOrganization
+                {
+                    Types = nodes,
+                    ColumnSets = nodes
                         .Where(ops.IsColumnSetRecord)
-                        .ToSortedList<string, TypeDeclarationSyntax>(t => t.Identifier.ValueText),
-                    RecordEntities: nodes
+                        .ToSortedList(t => t.Identifier.ValueText),
+                    RecordEntities = nodes
                         .WhereIs<SyntaxNode, RecordDeclarationSyntax>()
                         .Where(ops.IsEntityDeclarationRecord)
                         .ToImmutableArray(),
-                    ClassEntities: nodes
+                    ClassEntities = nodes
                         .WhereIs<SyntaxNode, ClassDeclarationSyntax>()
                         .Where(ops.IsEntityDeclarationClass)
                         .ToImmutableArray(),
-                    StructEntities: nodes
+                    StructEntities = nodes
                         .WhereIs<SyntaxNode, StructDeclarationSyntax>()
                         .Where(ops.IsEntityDeclarationStruct)
                         .ToImmutableArray()
-                    );
+                };
 
                 Debug.WriteLine($"Found {definition.Types.Length} type declarations");
                 Debug.WriteLine($"Found {definition.ColumnSets.Count} column set declarations");
@@ -64,10 +67,11 @@ namespace Crudy.Mssql.Gen
 
         public void Initialize(GeneratorInitializationContext context)
         {
-#if DEBUG
-            if (!Debugger.IsAttached)
-                Debugger.Launch();
-#endif 
+            //var fileSaysYes = File.ReadAllLines(@"C:\Users\kelso\Desktop\environment.txt")
+            //    .Any(line => line.StartsWith("debugSourceGen") && line.EndsWith("yes"));
+
+            //if (!Debugger.IsAttached && fileSaysYes)
+            //    Debugger.Launch();
         }
     }
 }

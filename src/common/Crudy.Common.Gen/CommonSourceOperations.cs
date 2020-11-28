@@ -10,14 +10,24 @@ namespace Crudy.Common.Gen
 {
     public class CommonSourceOperations
     {
-        private static IEnumerable<string> BaseTypeTexts(TypeDeclarationSyntax type)  =>
-            type.BaseList?.Types.Select(t => t.GetText().ToString()) ?? Enumerable.Empty<string>()
+        private static IEnumerable<string> BaseTypeTexts(TypeDeclarationSyntax type) =>
+            type.BaseList?.Types.Select(t => t.GetText().ToString()) ?? Enumerable.Empty<string>();
 
         public virtual bool IsColumnSetRecord(TypeDeclarationSyntax type)
         {
             if (!type.Modifiers.Any(ArePartial))
                 return false;
             return BaseTypeTexts(type).Any(t => t.StartsWith("ColumnSet"));
+        }
+
+        public string InnerColumnTypeString(TypeSyntax type)
+        {
+            throw new NotImplementedException();
+            if (type is TupleTypeSyntax tuple)
+                throw new NotImplementedException();
+            //else if (type is Generic)
+            
+            return type.ToString();
         }
 
         public virtual bool IsEntityDeclarationRecord(RecordDeclarationSyntax type)
@@ -28,7 +38,7 @@ namespace Crudy.Common.Gen
             ParameterSyntax? firstParam = type.ParameterList?.Parameters.FirstOrDefault();
             if (firstParam?.Identifier.ToString() != "ID")
                 return false;
-            var idTypeString = firstParam.Type?.ToString();
+            var idTypeString = InnerColumnTypeString(firstParam.Type);
             var isEntity = (type.BaseList?.Types.Select(t => t.GetText().ToString()) ?? Enumerable.Empty<string>())
                 .Any(t => t.StartsWith($"IEntity<{idTypeString}>"));
             return isEntity;

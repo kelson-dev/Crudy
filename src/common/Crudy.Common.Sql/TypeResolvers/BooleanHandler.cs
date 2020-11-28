@@ -21,12 +21,13 @@ namespace Crudy.Common.Sql.TypeResolvers
 
         public override string GetDbTypeString(Column column)
         {
-            if (column.TryGetAttribute(out FixedWidthAttribute f))
-                return $"BINARY({f.Width})";
-            else if (column.TryGetAttribute(out MaxWidthAttribute m))
-                return $"VARBINARY({m.Width})";
-            else
-                return $"VARBINARY(MAX)";
+            throw new NotImplementedException();
+            //if (column.TryGetAttribute(out FixedWidthAttribute f))
+            //    return $"BINARY({f.Width})";
+            //else if (column.TryGetAttribute(out MaxWidthAttribute m))
+            //    return $"VARBINARY({m.Width})";
+            //else
+            //    return $"VARBINARY(MAX)";
         }
 
         public override byte[] Deserialize(byte[] value) => value;
@@ -60,20 +61,22 @@ namespace Crudy.Common.Sql.TypeResolvers
     {
         public override DbType GetDbType(Column column)
         {
-            if (column.TryGetAttribute(out CurrencyAttribute currency))
-                return DbType.Currency;
-            else
-                return DbType.Decimal;
+            throw new NotImplementedException();
+            //if (column.TryGetAttribute(out CurrencyAttribute currency))
+            //    return DbType.Currency;
+            //else
+            //    return DbType.Decimal;
         }
 
         public override string GetDbTypeString(Column column)
         {
-            if (column.TryGetAttribute(out DecimalPrecisionAttribute precision))
-                return $"DECIMAL({precision.Total}, {precision.Fractional})";
-            else if (column.TryGetAttribute(out CurrencyAttribute currency))
-                return $"DECIMAL({currency.Total}, {currency.Fractional})";
-            else
-                return $"DECIMAL(64, 32)";
+            throw new NotImplementedException();
+            //if (column.TryGetAttribute(out DecimalPrecisionAttribute precision))
+            //    return $"DECIMAL({precision.Total}, {precision.Fractional})";
+            //else if (column.TryGetAttribute(out CurrencyAttribute currency))
+            //    return $"DECIMAL({currency.Total}, {currency.Fractional})";
+            //else
+            //    return $"DECIMAL(64, 32)";
         }
 
         public override decimal Deserialize(decimal value) => value;
@@ -85,20 +88,22 @@ namespace Crudy.Common.Sql.TypeResolvers
     {
         public override DbType GetDbType(Column column)
         {
-            if (column.TryGetAttribute(out CurrencyAttribute currency))
-                return DbType.Currency;
-            else
-                return DbType.Decimal;
+            throw new NotImplementedException();
+            //if (column.TryGetAttribute(out CurrencyAttribute currency))
+            //    return DbType.Currency;
+            //else
+            //    return DbType.Decimal;
         }
 
         public override string GetDbTypeString(Column column)
         {
-            if (column.TryGetAttribute(out DecimalPrecisionAttribute precision))
-                return $"DECIMAL({precision.Total}, {precision.Fractional})";
-            else if (column.TryGetAttribute(out CurrencyAttribute currency))
-                return $"DECIMAL({currency.Total}, {currency.Fractional})";
-            else
-                return "REAL";
+            throw new NotImplementedException();
+            //if (column.TryGetAttribute(out DecimalPrecisionAttribute precision))
+            //    return $"DECIMAL({precision.Total}, {precision.Fractional})";
+            //else if (column.TryGetAttribute(out CurrencyAttribute currency))
+            //    return $"DECIMAL({currency.Total}, {currency.Fractional})";
+            //else
+            //    return "REAL";
         }
 
         public override double Deserialize(double value) => value;
@@ -176,20 +181,22 @@ namespace Crudy.Common.Sql.TypeResolvers
     {
         public override DbType GetDbType(Column column)
         {
-            if (column.TryGetAttribute(out FixedWidthAttribute f))
-                return DbType.StringFixedLength;
-            else
-                return DbType.String;
+            throw new NotImplementedException();
+            //if (column.TryGetAttribute(out FixedWidthAttribute f))
+            //    return DbType.StringFixedLength;
+            //else
+            //    return DbType.String;
         }
 
         public override string GetDbTypeString(Column column)
         {
-            if (column.TryGetAttribute(out FixedWidthAttribute f))
-                return $"NCHAR({f.Width})";
-            else if (column.TryGetAttribute(out MaxWidthAttribute m))
-                return $"NVARCHAR({m.Width})";
-            else
-                return $"NVARCHAR(MAX)";
+            throw new NotImplementedException();
+            //if (column.TryGetAttribute(out FixedWidthAttribute f))
+            //    return $"NCHAR({f.Width})";
+            //else if (column.TryGetAttribute(out MaxWidthAttribute m))
+            //    return $"NVARCHAR({m.Width})";
+            //else
+            //    return $"NVARCHAR(MAX)";
         }
 
         public override string Deserialize(string value) => value;
