@@ -10,9 +10,8 @@ namespace Crudy.Mssql.Common
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TId"></typeparam>
     public record MssqlQueryCollection<T, TId>(
-        Column[] Columns,
-        Column[] NonIdColumns,
         Column IdColumn,
+        Column[] Columns,
         string TableName,
         string CreateTableSql,
         string DropTableSql,
@@ -29,6 +28,26 @@ namespace Crudy.Mssql.Common
         where T : IEntity<TId>
         where TId : IComparable<TId>, IEquatable<TId>
     {
+        public static MssqlQueryCollection<T, TId> Create(string tableName, Column idColumn, Column[] columns) =>
+            new(IdColumn: idColumn,
+                Columns: columns,
+                TableName: tableName,
+                CreateTableSql: "CREATE TABLE [" + tableName + "] ("
+                    + idColumn.ToColumnSql() + ", "
+                    + string.Join(", ",
+                        columns.Select(c => c.ToColumnSql())) + ");",
+                DropTableSql: "DROP TABLE [" + tableName + "];",
+                WhereIdPredicate: "not implemented",
+                DeletePrefix: "not implemented",
+                DeleteWhereId: "not implemented",
+                UpdatePrefix: "not implemented",
+                UpdateAllColumns: "not implemented",
+                ColumnsList: "not implemented",
+                ReadPrefix: "not implemented",
+                ReadAll: "not implemented",
+                ReadByIdId: "not implemented",
+                WriteSql: "not implemented");
+
         public string DeleteSqlById()
             => DeleteWhereId;
 

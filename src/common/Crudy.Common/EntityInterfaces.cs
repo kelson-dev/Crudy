@@ -11,7 +11,10 @@ namespace Crudy.Common
     /// <typeparam name="TId"></typeparam>
     public interface INewEntity<T, TId> 
         where T : IEntity<TId>
-        where TId : IComparable<TId>, IEquatable<TId> { }
+        where TId : IComparable<TId>, IEquatable<TId> 
+    { 
+        string TableName { get; }
+    }
 
     public interface IEntity<TId>
         where TId : IComparable<TId>, IEquatable<TId> { }

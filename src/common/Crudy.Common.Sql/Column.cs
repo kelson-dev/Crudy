@@ -2,20 +2,11 @@
 
 namespace Crudy.Common.Sql
 {
-    public record Column(Type Type, string ColumnName, string PropertyName, Attribute[] Attributes)
+    public record Column(Type Type, string PropertyName)
     {
-        public bool TryGetAttribute<T>(out T attribute) where T : Attribute
-        {
-            foreach (var current in Attributes)
-            {
-                if (current is T found)
-                {
-                    attribute = found;
-                    return true;
-                }
-            }
-            attribute = default;
-            return false;
-        }
+        private string? _columnName = null;
+        public string ColumnName => _columnName ?? PropertyName;
+
+        public string ToColumnSql() => throw new NotImplementedException();
     };
 }

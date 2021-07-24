@@ -8,14 +8,24 @@ namespace Crudy.Examples.ProjectTracker.Entities
     public class S256 : Size { public override uint Value => 256; }
     public class S2048 : Size { public override uint Value => 2048; }
 
+    // A ColumnSet, not an Entity
     public partial record Timestamp(
-        CreateTime<DateTimeOffset> Created, 
+        // Readonly
+        // Set when a NewTimestamp is *inserted* into storage
+        CreateTime<DateTimeOffset> Created,
+        // Readonly
+        // Set when a Timestamp is inserted or updated
         UpdateTime<DateTimeOffset> Updated,
+        // Readonly
+        // Set when a Timestamp is inserted or updated
         UpdateRandom<Guid> Revision)
         : ColumnSet;
 
     public partial record EmailContact(
+        // Readonly
+        // Set when an EmailContact is inserted or updated
         CreateRandom<Guid> ID,
+        // Foriegn key reference to a user
         One<User, Guid> User,
         string Address,
         Timestamp Timestamp)

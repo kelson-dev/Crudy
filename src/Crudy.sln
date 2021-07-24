@@ -28,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crudy.Mssql.Gen", "mssql\Cr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crudy.Common.Sql", "common\Crudy.Common.Sql\Crudy.Common.Sql.csproj", "{CE84EE86-C4AC-4D28-9931-072F69873DD3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crudy.Examples.ProjectTracker.Demo", "..\examples\Crudy.Examples.ProjectTracker.Demo\Crudy.Examples.ProjectTracker.Demo.csproj", "{92867196-E8BC-40B3-AE70-8AF6BEDA75C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,12 @@ Global
 		{CE84EE86-C4AC-4D28-9931-072F69873DD3}.Develop|Any CPU.Build.0 = Develop|Any CPU
 		{CE84EE86-C4AC-4D28-9931-072F69873DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE84EE86-C4AC-4D28-9931-072F69873DD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92867196-E8BC-40B3-AE70-8AF6BEDA75C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92867196-E8BC-40B3-AE70-8AF6BEDA75C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92867196-E8BC-40B3-AE70-8AF6BEDA75C4}.Develop|Any CPU.ActiveCfg = Debug|Any CPU
+		{92867196-E8BC-40B3-AE70-8AF6BEDA75C4}.Develop|Any CPU.Build.0 = Debug|Any CPU
+		{92867196-E8BC-40B3-AE70-8AF6BEDA75C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92867196-E8BC-40B3-AE70-8AF6BEDA75C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +97,7 @@ Global
 		{2EE36088-BB5D-4FFF-9BDF-D4FF164AE2AC} = {785BCDB2-AE30-49C9-81A0-0AFEF2207F35}
 		{48794A7C-7BE5-4D94-A113-8984BB874B4C} = {785BCDB2-AE30-49C9-81A0-0AFEF2207F35}
 		{CE84EE86-C4AC-4D28-9931-072F69873DD3} = {0BD05F85-DA54-4108-A4BC-AAFD40B7BCEC}
+		{92867196-E8BC-40B3-AE70-8AF6BEDA75C4} = {540A4810-D646-4855-AD6F-D61C311CC4FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CE79B95-C1FB-4669-BAF9-A7F45DA71D45}

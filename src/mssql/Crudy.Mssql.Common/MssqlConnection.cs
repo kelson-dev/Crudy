@@ -1,7 +1,6 @@
 ﻿using Crudy.Common;
 using Crudy.Common.Sql;
 using System;
-using System.Collections.Generic;
 
 namespace Crudy.Mssql.Common
 {
